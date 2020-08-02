@@ -1,2 +1,2 @@
-# Automatic-Hoax-Detection-System
-Automatic Hoax Detection System using NLP
+# HoaxDetection
+Research to make a hoax detection software with python.
