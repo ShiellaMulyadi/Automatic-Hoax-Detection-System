@@ -26,10 +26,11 @@ listStopword =  set(stopwords.words('indonesian'))
 
 # read csv
 with open('testing1.csv') as csv_file:
-    csv_reader = csv.reader(csv_file, delimiter='=')
+    csv_reader = csv.reader(csv_file, delimiter=';')
     for row in csv_reader:
-        print(row)
 
+        sentence = row[1]
+        
         #cased folding process
         cased_folding = sentence.strip().translate(str.maketrans("","",string.punctuation))
         #lower case
@@ -46,13 +47,15 @@ with open('testing1.csv') as csv_file:
         #kemunculan = nltk.FreqDist(removed)
         #kemunculan.plot(30,cumulative=False)
         #plt.show()
-
-        print("\noriginal sentence")    
+        #print(kemunculan)
+        """
+        print("\noriginal sentence")
         print(sentence + "\n")
         print("steemed sentence")
         print(stemmed_sentence+ "\n")
         print('tokenized sentence')
         print(word_tokenize(stemmed_sentence))
         print('\nsentence after stopword removal')
-       
-        #print(kemunculan)
+        """
+        print(removed)
+ 
