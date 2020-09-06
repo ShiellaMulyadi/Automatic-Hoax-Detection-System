@@ -5,57 +5,36 @@ import string
 import nltk 
 import csv
 import pandas as pd
-import numpy as np
-#import for showing graphic
-import matplotlib.pyplot as plt
-# import StemmerFactory class
-from Sastrawi.Stemmer.StemmerFactory import StemmerFactory
-# impor word_tokenize dari modul nltk
-from nltk.tokenize import word_tokenize 
-from nltk.probability import FreqDist
-# import stopword removal 
-from nltk.tokenize import sent_tokenize, word_tokenize
+from csv import writer
 from nltk.corpus import stopwords
+from Sastrawi.Stemmer.StemmerFactory import StemmerFactory
 
+# create stopword
+listStopword =  set(stopwords.words('indonesian'))
 # create stemmer
 factory = StemmerFactory()
 stemmer = factory.create_stemmer()
 
-# create stopword
-listStopword =  set(stopwords.words('indonesian'))
-
 # read csv
-with open('testing1.csv') as csv_file:
+with open('HoaxDetection-master/Data frame/Data Mentah/600 news with valid hoax label.csv') as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=';')
     for row in csv_reader:
-
-        sentence = row[1]
-        
-        #cased folding process
-        cased_folding = sentence.strip().translate(str.maketrans("","",string.punctuation))
-        #lower case
-        sentence_lower_cased = cased_folding.lower()
-        #hapus angka
-        sentence_no_number = re.sub(r"\d+", "", sentence_lower_cased)
-        final_sentence = sentence_no_number
-        stemmed_sentence = stemmer.stem(final_sentence)
-        tokenized_sentences = nltk.tokenize.word_tokenize(stemmed_sentence)
-        removed =[]
-        for t in tokenized_sentences:
-            if t not in listStopword:
-                removed.append(t)
-        #kemunculan = nltk.FreqDist(removed)
-        #kemunculan.plot(30,cumulative=False)
-        #plt.show()
-        #print(kemunculan)
-        """
-        print("\noriginal sentence")
-        print(sentence + "\n")
-        print("steemed sentence")
-        print(stemmed_sentence+ "\n")
-        print('tokenized sentence')
-        print(word_tokenize(stemmed_sentence))
-        print('\nsentence after stopword removal')
-        """
-        print(removed)
- 
+        with open('HoaxDetection-master/Data frame/600 news with valid hoax label-cased folding+remove stopword+stemming.csv', 'a+', newline='') as write_obj: 
+            # Create a writer object from csv module
+            csv_writer = writer(write_obj)
+            # Casefold
+            row[0] = row[0].casefold()
+            # remove stopword + stemming
+            sentence = row[0].split()
+            removed = []
+            for word in sentence:
+                word = stemmer.stem(word)
+                if word not in listStopword:
+                    removed.append(word)
+                else:
+                    pass
+            row[0] = removed
+            # Add contents of list as last row in the csv file
+            csv_writer.writerow(row)
+            
+                        
