@@ -10,7 +10,7 @@ final = {}
 TOTV = 0
 TOTH = 0
 
-#count words
+#fungsi count words
 def count(elements,label): 
     if label =='Valid':
         if elements in dictionaryV: 
@@ -26,7 +26,7 @@ def count(elements,label):
         pass
 
 #training
-with open('Data frame/5 news with valid hoax label.csv') as csv_file:
+with open('Data frame/50 news with valid hoax label.csv') as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=',')
     for row in csv_reader:
         cased_folding = row[0].strip().translate(str.maketrans("","",string.punctuation))
@@ -52,7 +52,7 @@ for allKeys in dictionaryH:
         pass
 
 #testing
-with open('Data frame/5 news with valid hoax label.csv') as csv_file:
+with open('Data frame/50 news with valid hoax label.csv') as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=',')
     for row in csv_reader:
         cased_folding = row[0].strip().translate(str.maketrans("","",string.punctuation))
